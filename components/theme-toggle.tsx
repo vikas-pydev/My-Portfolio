@@ -304,11 +304,11 @@ const ThemeToggle = () => {
         {showDropdown && (
           <motion.div
             ref={dropdownRef}
-            initial={{ opacity: 0, y: -5, scale: 0.97 }}
+            initial={{ opacity: 0, y: 5, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -5, scale: 0.95 }}
+            exit={{ opacity: 0, y: 5, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute right-0 top-full mt-2 backdrop-blur-[5px] rounded-lg p-1.5 z-50 min-w-[170px] border border-border/60" // Adjusted styles
+            className="absolute right-0 bottom-full mb-2 backdrop-blur-[5px] rounded-lg p-1.5 z-50 min-w-[170px] border border-border/60" // Adjusted styles
             style={{
               background: "rgba(var(--card-rgb), 0.7)",
               boxShadow: "0 8px 20px -5px rgba(0, 0, 0, 0.1), 0 6px 10px -6px rgba(0, 0, 0, 0.1)",

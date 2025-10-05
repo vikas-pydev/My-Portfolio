@@ -59,11 +59,12 @@ const Hero = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="text-xl md:text-2xl text-muted-foreground mt-4 max-w-xl"
+                className="text-xl md:text-2xl text-muted-foreground mt-4"
               >
                 <span className="text-primary font-medium">MCA Student</span> specializing in{" "}
                 <TextAnimation
-                  phrases={["Vibe Coding", "Artificial Intelligence", "Machine Learning", "Web Development"]}
+                  phrases={["Vibe Coding", "Artificial Intelligence", "Machine Learning", "Data Science"]}
+                  interval={2000}
                 />
               </motion.div>
             </div>
@@ -87,38 +88,7 @@ const Hero = () => {
               </a>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.1 }}
-              className="flex gap-4 mt-2"
-            >
-              <a
-                href="https://www.linkedin.com/in/vikas-aiml"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-secondary hover:bg-primary/10 text-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a
-                href="https://github.com/vikas-pydev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-secondary hover:bg-primary/10 text-foreground hover:text-primary transition-colors"
-                aria-label="GitHub Profile"
-              >
-                <Github size={20} />
-              </a>
-              <a
-                href="mailto:vikastirumanyam@gmail.com"
-                className="p-2 rounded-full bg-secondary hover:bg-primary/10 text-foreground hover:text-primary transition-colors"
-                aria-label="Email Contact"
-              >
-                <Mail size={20} />
-              </a>
-            </motion.div>
+
           </motion.div>
 
           <motion.div

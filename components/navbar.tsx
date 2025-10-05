@@ -1,147 +1,81 @@
 "use client"
 
-import type React from "react"
-
-import { useState, useEffect } from "react"
+import React from "react"
+import { Github, Linkedin, Mail, Home, Globe, LayoutGrid, Briefcase, FolderGit2, GraduationCap } from "lucide-react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import ThemeToggle from "./theme-toggle"
 import { motion } from "framer-motion"
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
-
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     const element = document.querySelector(href)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
-      setIsOpen(false)
     }
   }
 
   const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Experience", href: "#experience" },
-    { name: "Projects", href: "#projects" },
-    { name: "Education", href: "#education" },
-    { name: "Contact", href: "#contact" },
-  ]
+    { name: "Home", href: "#home", icon: Home },
+    { name: "About", href: "#about", icon: Globe },
+    { name: "Skills", href: "#skills", icon: LayoutGrid },
+    { name: "Experience", href: "#experience", icon: Briefcase },
+    { name: "Projects", href: "#projects", icon: FolderGit2 },
+    { name: "Education", href: "#education", icon: GraduationCap },
+    { name: "Contact", href: "#contact", icon: Mail },
+    { name: "GitHub", href: "https://github.com/vikas-pydev", icon: Github, external: true },
+    { name: "LinkedIn", href: "https://www.linkedin.com/in/vikas-aiml", icon: Linkedin, external: true },
+    { name: "Resume", href: "/resume", icon: Briefcase },
+  ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-md shadow-md" : "bg-transparent"
-      }`}
+    <nav
+      className={`fixed bottom-10 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 bg-background/80 backdrop-blur-md shadow-lg rounded-full
+        flex justify-around items-center py-2 px-4 md:px-8 w-[90%] md:w-[60%] lg:w-[40%] max-w-screen-md`}
     >
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-xl font-bold"
-        >
-          <Link href="/" className="flex items-center">
-            <span className="text-primary">Vikas</span>
-            <span className="text-foreground">.py</span>
-          </Link>
-        </motion.div>
-
-        {/* Desktop Navigation */}
-        <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="hidden md:flex items-center gap-6"
-        >
-          {navLinks.map((link, index) => (
-            <a
-              key={link.name}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+        className="group relative flex flex-col items-center p-2 rounded-full hover:bg-primary/10 transition-colors"
+      >
+        <ThemeToggle />
+        <span className="absolute -top-8 px-2 py-1 bg-foreground text-background text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+          Theme
+        </span>
+      </motion.div>
+      {navLinks.map((link, index) => {
+        const Icon = link.icon;
+        return (
+          <React.Fragment key={link.name}>
+            <motion.a
               href={link.href}
-              onClick={(e) => scrollToSection(e, link.href)}
-              className="text-foreground/80 hover:text-primary transition-colors relative group"
+              target={link.external ? "_blank" : "_self"}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              onClick={(e) => {
+                if (link.href.startsWith('#')) {
+                  scrollToSection(e, link.href);
+                }
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="group relative flex flex-col items-center p-2 rounded-full hover:bg-primary/10 transition-colors"
+              aria-label={link.name}
             >
-              {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          ))}
-        </motion.nav>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex items-center gap-3"
-        >
-          <Link href="/resume" className="hidden md:block">
-            <Button
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            >
-              Resume
-            </Button>
-          </Link>
-          <ThemeToggle />
-          <button className="md:hidden text-foreground" onClick={toggleMenu} aria-label="Toggle menu">
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </motion.div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden bg-background/95 backdrop-blur-md"
-        >
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-foreground/80 hover:text-primary py-2 transition-colors"
-                onClick={(e) => scrollToSection(e, link.href)}
-              >
+              <Icon size={20} className="text-foreground group-hover:text-primary" />
+              <span className="absolute -top-8 px-2 py-1 bg-foreground text-background text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                 {link.name}
-              </a>
-            ))}
-            <Link href="/resume" className="py-2" onClick={() => setIsOpen(false)}>
-              <Button
-                variant="outline"
-                className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              >
-                Resume
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
-      )}
-    </header>
-  )
-}
+              </span>
+            </motion.a>
+            {link.name === "Contact" && (
+              <div className="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

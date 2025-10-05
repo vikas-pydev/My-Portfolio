@@ -1,193 +1,177 @@
 "use client"
 
-import { useEffect } from "react"
-import { useTheme } from "next-themes"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import Link from "next/link"
-import { motion } from "framer-motion"
+import React, { useEffect } from "react";
+import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 export default function ResumePage() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
+  const router = useRouter();
+  const cardRef = React.useRef<HTMLDivElement>(null);
 
-  // Set title
   useEffect(() => {
-    document.title = "Vikas Thirumanyam | Resume"
-  }, [])
+    document.title = "Vikas Thirumanyam | Resume";
+  }, []);
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (cardRef.current && !cardRef.current.contains(event.target as Node)) {
+      router.push("/");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [router]);
 
   return (
-    <div className="min-h-screen py-12 px-4 bg-background">
+    <div className="min-h-screen py-12 px-4 bg-background text-foreground">
       <div className="container mx-auto max-w-4xl">
-        <div className="flex justify-between items-center mb-8">
-          <Link href="/">
-            <Button variant="ghost" className="gap-2">
-              <ArrowLeft size={16} />
-              Back to Portfolio
-            </Button>
-          </Link>
-        </div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <Card className="p-8 border-primary/20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card ref={cardRef} className="p-8 border-primary/20 shadow-lg">
             <header className="mb-8 text-center">
-              <h1 className="text-3xl font-bold mb-2">Vikas Thirumanyam</h1>
-              <p className="text-muted-foreground">
-                vikastirumanyam@gmail.com • 6300440576 • Bengaluru, Karnataka, India •{" "}
+              <h1 className="text-4xl font-bold mb-2">VIKAS THIRUMANYAM</h1>
+              <p className="text-muted-foreground text-lg">
+                Bengaluru, Karnataka | vikastirumanyam@gmail.com | +91 6300440576
+              </p>
+              <p className="text-primary text-lg mt-1">
                 <a
                   href="https://www.linkedin.com/in/vikas-aiml"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline"
+                  className="hover:underline"
                 >
                   LinkedIn
                 </a>{" "}
-                •{" "}
+                |{" "}
                 <a
                   href="https://github.com/vikas-pydev"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:underline"
+                  className="hover:underline"
                 >
                   GitHub
+                </a>{" "}
+                |{" "}
+                <a href="/" className="hover:underline">
+                  Portfolio
                 </a>
               </p>
             </header>
 
             <section className="mb-6">
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">PROFESSIONAL SUMMARY</h2>
-              <p className="text-foreground/90">
-                AI/ML Data Scientist with hands-on experience building scalable, real-time fraud detection systems using
-                XGBoost, BERT, and explainable AI techniques. Proven track record in developing high-precision models
-                (up to 95% fraud detection accuracy), deploying REST APIs, and visualizing fraud trends via interactive
-                dashboards. Skilled in translating complex data into actionable insights, with deployments on AWS using
-                Docker. Passionate about privacy-compliant AI innovation, large-scale data analysis, and building
-                secure, transparent machine learning solutions.
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">SUMMARY</h2>
+              <p className="text-foreground/90 leading-relaxed">
+                Innovative Software Engineer with hands-on experience in AI/ML, distributed backend systems, and scalable API
+                design. Skilled in Python, Flask, JavaScript, and cloud-native technologies (Docker, Google Cloud) with a deep
+                passion for building impactful, data-driven solutions. Brings a blend of algorithmic thinking, full-stack versatility,
+                and practical engineering to solve complex problems at scale — aligned with Google’s mission to organize and
+                enhance access to information.
               </p>
             </section>
 
             <section className="mb-6">
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">EXPERIENCE</h2>
-              <div className="mb-4">
-                <div className="flex justify-between items-start flex-wrap">
-                  <h3 className="text-lg font-medium">Artificial Intelligence Intern</h3>
-                  <span className="text-muted-foreground text-sm">Sep 2024 – Oct 2024</span>
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">CORE TECHNICAL SKILLS</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-foreground/90">
+                <div>
+                  <h3 className="font-medium mb-1">Languages:</h3>
+                  <p>Python, R, HTML/CSS, JavaScript</p>
                 </div>
-                <p className="text-primary mb-2">Btech Walleh in association with Teachnook | Remote</p>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Achieved 90%+ accuracy in sentiment classification using DistilBERT, deployed via Flask API.</li>
-                  <li>
-                    Reduced manual feedback analysis time by 40% through automated sentiment chatbot implementation.
-                  </li>
-                  <li>
-                    Improved customer sentiment understanding by 85% by providing instant analysis using the developed
-                    chatbot.
-                  </li>
-                  <li>Decreased API latency by 15% through optimized DistilBERT model deployment in Flask.</li>
+                <div>
+                  <h3 className="font-medium mb-1">Frameworks:</h3>
+                  <p>Flask, TensorFlow, PyTorch, Hugging Face</p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-1">Databases:</h3>
+                  <p>MySQL, Cassandra, Firebase</p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-1">Cloud:</h3>
+                  <p>Google Cloud, Docker, Render, Vercel</p>
+                </div>
+                <div className="md:col-span-2">
+                  <h3 className="font-medium mb-1">Concepts:</h3>
+                  <p>REST APIs, Distributed Computing, NLP, System Design, Debugging</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="mb-6">
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">EXPERIENCE</h2>
+              <div className="mb-4">
+                <h3 className="text-xl font-medium">Artificial Intelligence Intern</h3>
+                <p className="text-primary">IBM SkillsBuild – Edunet Foundation | Remote | Jun 2025 – Jul 2025</p>
+                <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                  <li>Built end-to-end ML pipeline for employee salary prediction achieving 94% accuracy.</li>
+                  <li>Deployed model as real-time Flask API and integrated UI for instant insights.</li>
+                  <li>Collaborated remotely ensuring quality deliverables.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium">Artificial Intelligence Intern</h3>
+                <p className="text-primary">BTech Walleh (Teachnook) | Remote | Sep 2024 – Oct 2024</p>
+                <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                  <li>Developed Sentiment Analysis Chatbot using DistilBERT achieving 90%+ accuracy.</li>
+                  <li>Optimized inference reducing API latency by 15%.</li>
+                  <li>Built frontend on Vercel improving accessibility and UX.</li>
                 </ul>
               </div>
             </section>
 
             <section className="mb-6">
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">PROJECTS</h2>
-
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">PROJECTS</h2>
               <div className="mb-4">
-                <h3 className="text-lg font-medium">Ad Click Fraud Detection using Machine Learning</h3>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
-                    Engineered an XGBoost model that identified click fraud with 92.5% F1-score, using SHAP for
-                    interpretable ML insights.
-                  </li>
-                  <li>Applied advanced feature engineering and SMOTE for class balancing across 100k+ records.</li>
-                  <li>
-                    Integrated real-time visual dashboards to monitor fraud trends, improving analyst decision speed by
-                    ~40%.
-                  </li>
+                <h3 className="text-xl font-medium">PredictWise – AI-Powered Stock Market Analysis Platform</h3>
+                <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                  <li>Flask + Cassandra backend (Dockerized) handling real-time data.</li>
+                  <li>Integrated ML forecasting, trade signal generation, and structured logging.</li>
                 </ul>
               </div>
-
-              <div className="mb-4">
-                <h3 className="text-lg font-medium">BERT-Powered LLM for Comment & Metadata Flagging</h3>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
-                    Fine-tuned a BERT-based model to detect fraudulent ad comments and metadata with 89% classification
-                    accuracy.
-                  </li>
-                  <li>Deployed a Flask-based REST API for real-time fraud probability scoring and label prediction.</li>
-                  <li>
-                    Incorporated explainable AI (SHAP) for transparent model interpretation, enabling regulatory audit
-                    compliance.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mb-4">
-                <h3 className="text-lg font-medium">Ad Fraud Trend Dashboard & Visualization Tool</h3>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
-                    Designed and deployed a Streamlit-powered dashboard visualizing fraud trends across geo, device, and
-                    publisher segments.
-                  </li>
-                  <li>
-                    Leveraged Matplotlib, Plotly, and Pandas for interactive insights from 250k+ ad event records.
-                  </li>
-                  <li>
-                    Containerized using Docker and deployed on AWS EC2, ensuring scalable, secure, and low-latency
-                    access.
-                  </li>
+              <div>
+                <h3 className="text-xl font-medium">Parrot – Real-Time Sentiment Analysis Chatbot</h3>
+                <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                  <li>Flask backend with DistilBERT via REST API, 90%+ accuracy.</li>
+                  <li>Deployed backend on Render, frontend on Vercel.</li>
                 </ul>
               </div>
             </section>
 
             <section className="mb-6">
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">CERTIFICATIONS</h2>
-              <ul className="space-y-2">
-                <li>
-                  <span className="font-medium">Certification in Master Course in Full Stack Development</span>
-                  <p className="text-muted-foreground">Great Learning</p>
-                </li>
-                <li>
-                  <span className="font-medium">AWS for Beginners</span>
-                  <p className="text-muted-foreground">Great Learning</p>
-                </li>
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">CERTIFICATIONS</h2>
+              <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                <li>Build Real World AI Applications with Gemini & Imagen – Google Cloud</li>
+                <li>Prompt Design in Vertex AI – Google Cloud</li>
+                <li>Artificial Intelligence Fundamentals – IBM SkillsBuild</li>
               </ul>
             </section>
 
             <section className="mb-6">
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">SKILLS</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">AI</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">Machine Learning</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">Deep Learning</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">Reinforcement Learning</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">Data Science</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">Python</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">HTML</div>
-                <div className="bg-primary/10 px-3 py-1 rounded-md text-center">AI/ML Algorithms</div>
-              </div>
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">EDUCATION</h2>
+              <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                <li>MCA – Presidency University, Bengaluru (2023–2025)</li>
+                <li>BCom (Computer Applications) – Sri Venkateswara University, Tirupati (2018–2021)</li>
+              </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold mb-3 border-b pb-2">EDUCATION</h2>
-              <div className="mb-4">
-                <div className="flex justify-between items-start flex-wrap">
-                  <h3 className="text-lg font-medium">Presidency University, Bengaluru</h3>
-                  <span className="text-muted-foreground text-sm">Aug 2023 – present</span>
-                </div>
-                <p className="text-primary">Master of Computer Applications - (MCA) in Computer Applications</p>
-              </div>
-
-              <div>
-                <div className="flex justify-between items-start flex-wrap">
-                  <h3 className="text-lg font-medium">Sri Venkateswara University, Tirupati</h3>
-                  <span className="text-muted-foreground text-sm">Aug 2018 – May 2021</span>
-                </div>
-                <p className="text-primary">Bachelor of Commerce - (BCom) in Computer Applications</p>
-              </div>
+              <h2 className="text-2xl font-semibold mb-3 border-b pb-2">HIGHLIGHTED ACHIEVEMENTS</h2>
+              <ul className="list-disc pl-5 text-foreground/90 leading-relaxed">
+                <li>Delivered 5+ end-to-end AI/ML projects with 95%+ uptime and production-grade APIs.</li>
+                <li>Recognized for clean, modular, and documented code (PEP8).</li>
+                <li>Strong interest in distributed systems, NLP, and accessibility.</li>
+              </ul>
             </section>
           </Card>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
