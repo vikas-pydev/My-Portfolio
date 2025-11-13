@@ -36,21 +36,7 @@ const Navbar = () => {
     }
   }
 
-  const handleDragEnd = (event: any, info: any, index: number) => {
-    const newOrder = [...navItems];
-    const draggedItem = newOrder[index];
-    newOrder.splice(index, 1);
-    
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    const scrollRect = scrollContainer.getBoundingClientRect();
-    const itemWidth = scrollContainer.scrollWidth / newOrder.length; // Approximate width of each item
-    const newIndex = Math.floor((info.point.x - scrollRect.left + scrollContainer.scrollLeft) / itemWidth);
-
-    newOrder.splice(newIndex, 0, draggedItem);
-    setNavItems(newOrder);
-  };
+  // Disable drag-reorder to improve responsiveness on tablet widths
 
   return (
     <>
@@ -135,7 +121,7 @@ const Navbar = () => {
                 Home
               </span>
             </motion.a>
-            <div ref={scrollRef} className="flex overflow-x-auto thin-scrollbar">
+            <div ref={scrollRef} className="flex flex-nowrap gap-2 md:gap-3 overflow-x-auto thin-scrollbar">
               {navItems.map((link, index) => {
                 const Icon = link.icon;
                 return (
@@ -154,13 +140,9 @@ const Navbar = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: 0.1 }}
-                          className="group relative flex flex-col items-center p-2 rounded-full hover:bg-primary/10 transition-colors"
+                          className="group relative flex flex-col items-center p-2 rounded-full hover:bg-primary/10 transition-colors min-w-[44px]"
                           aria-label={link.name}
-                          drag="x"
-                          dragConstraints={scrollRef}
-                          dragElastic={0.2}
-                          onDragEnd={(event, info) => handleDragEnd(event, info, index)}
-                          style={{ cursor: "grab" }}
+                          style={{ cursor: "pointer" }}
                         >
                           <Icon size={20} className="text-foreground group-hover:text-primary" />
                         </motion.a>
