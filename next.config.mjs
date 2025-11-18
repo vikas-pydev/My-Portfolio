@@ -22,10 +22,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
-    parallelServerCompiles: true,
+  experimental: {},
+  webpack: (config) => {
+    config.output = config.output || {}
+    config.output.hashFunction = 'sha256'
+    return config
   },
 }
 
